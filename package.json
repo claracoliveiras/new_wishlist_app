@@ -1,0 +1,20 @@
+{
+  "name": "new_wishlist_api",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@elysiajs/jwt": "^1.3.0",
+    "@elysiajs/swagger": "^1.3.0",
+    "elysia": "^1.3.1",
+    "pg": "^8.15.6"
+  },
+  "scripts": {
+    "dev": "bun index.ts"
+  }
+}
