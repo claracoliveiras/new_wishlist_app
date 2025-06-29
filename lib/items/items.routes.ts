@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia";
 import { db } from "../../db";
-import { newWishlistItemController, selectWishlistItemPerIdController, selectWishlistItemsPerUserController } from "./items.controller";
+import { deleteWishlistItemController, newWishlistItemController, selectWishlistItemPerIdController, selectWishlistItemsPerUserController, updateWishlistItemController } from "./items.controller";
 
 export default new Elysia(
     {
@@ -45,24 +45,26 @@ export default new Elysia(
     })
     .put('/updateWishlistItem/:uuid', async ({ params, body }) => {
         const { uuid } = params;
-        const { itemname, itemurl, imgurl, itemprice, itemcolor, itembrand, itemsize, itemcurrency, tied_user } = body;
+        const { itemname, itemurl, imgurl, itemprice, itemcolor, itembrand, itemsize, itemcurrency } = body;
 
-        await db`UPDATE items SET itemname = ${itemname}, itemurl = ${itemurl}, imgurl = ${imgurl}, itemprice = ${itemprice}, itemcolor = ${itemcolor}, itembrand = ${itembrand}, itemsize = ${itemsize}, itemcurrency = ${itemcurrency}, tied_user = ${tied_user} WHERE uuid = ${uuid}`;
+        return await updateWishlistItemController(uuid, itemname, itemurl, imgurl, itemprice, itemcolor, itembrand, itemsize, itemcurrency);
     },
     {
         body: t.Object({
             itemname: t.String(),
             itemurl: t.String(),
             imgurl: t.String(),
-            itemprice: t.String(),
+            itemprice: t.Number(),
             itemcolor: t.String(),
             itembrand: t.String(),
             itemsize: t.String(),
-            itemcurrency: t.Number(),
+            itemcurrency: t.String(),
             tied_user: t.String()
         })
     })
     .delete('/deleteWishlistItem/:uuid', async ({ params }) => {
         const { uuid } = params;
-        await db`DELETE FROM items WHERE uuid = ${uuid}`;
+        
+        await deleteWishlistItemController(uuid);
+        return { message: "Deleted successfully." }
     });
