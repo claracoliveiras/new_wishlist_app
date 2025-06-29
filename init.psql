@@ -1,4 +1,15 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE IF NOT EXISTS users (
+    user_username text NOT NULL PRIMARY KEY,
+    user_password text NOT NULL,
+    user_displayname text NOT NULL,
+    user_profile_picture text,
+    user_bio text,
+    user_instagram text,
+    user_github text
+);
+
 CREATE TABLE IF NOT EXISTS items (
     id uuid NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     itemname text NOT NULL,
@@ -10,14 +21,4 @@ CREATE TABLE IF NOT EXISTS items (
     itemsize text,
     itemcurrency text,
     tied_user text NOT NULL REFERENCES users(user_username) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS users (
-    user_username text NOT NULL PRIMARY KEY,
-    user_password text NOT NULL,
-    user_displayname text NOT NULL,
-    user_profile_picture text,
-    user_bio text,
-    user_instagram text,
-    user_github text
 );
