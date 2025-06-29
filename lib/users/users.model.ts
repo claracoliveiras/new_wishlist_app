@@ -1,5 +1,3 @@
-// where the raw sql goes
-
 import { db } from "../../db";
 
 export async function insertNewUser(username: string, hashedPassword: string) {

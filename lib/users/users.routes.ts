@@ -1,5 +1,5 @@
 import Elysia, { t } from "elysia";
-import { findAllUsersController, loginUser, registerNewUser } from "./users.controller";
+import { findAllUsersController, loginController, registerController } from "./users.controller";
 import jwt from "@elysiajs/jwt";
 
 export default new Elysia(
@@ -14,7 +14,7 @@ export default new Elysia(
         }))
     .post('/register', async ({ body }) => {
         const { username, password } = body;
-        return await registerNewUser(username, password);
+        return await registerController(username, password);
     },
     {
         body: t.Object({
@@ -23,22 +23,28 @@ export default new Elysia(
         }),
     },
 )
-    .post('/login', async ({body, jwt, cookie: { auth }}) => {
+    .post('/login', async ({body, jwt, cookie: { auth, usernameCookie }})  => {
         const { username, password } = body;
-        const passwordMatchResults = await loginUser(username, password);
+        const passwordMatchResults = await loginController(username, password);
         if(passwordMatchResults) {
             const value = await jwt.sign({ username });
 
             auth.set({
                 value,
-                maxAge: 7 * 86400,
-            })
+            });
+
+            usernameCookie.set({
+                value: username,
+            });
 
             return { message: "User logged in successfully" }
         }
         
     },
     {
+        cookie: t.Cookie({
+            usernameCookie: t.Optional(t.String())
+        }),
         body: t.Object({
             username: t.String(),
             password: t.String()
@@ -47,4 +53,5 @@ export default new Elysia(
 )
     .get('/getAllUserList', async () => {
         return await findAllUsersController();
-    });
+    }
+);

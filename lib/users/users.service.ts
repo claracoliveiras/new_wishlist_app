@@ -1,9 +1,8 @@
 import { insertNewUser, findUser, findAllUsers } from "./users.model";
 
-// modify the stuff from the model route (business logic)
-export async function handleRegister(username: string, password:string) {
+export async function registerService(username: string, password:string) {
     if (password.length < 8) {
-        return { message: "Password needs to be at least 8 characters"}
+        throw new Error("Password must be at least 8 characters long.");
     }
     
     try {
@@ -17,15 +16,20 @@ export async function handleRegister(username: string, password:string) {
     } 
 }
 
-export async function handleLogin(username:string, password:string) {
-    const user = await findUserByUsername(username);
-    const hashedPassword = user[1];
+export async function loginService(username:string, password:string) {
+    const user = await findUserByUsernameService(username);
 
+    if (user == null) {
+        throw new Error("User not found.");
+    }
+
+    const hashedPassword = user[1];
     const passCheck = await Bun.password.verify(password, hashedPassword);
+    
     return passCheck;
 }
 
-export async function findUserByUsername(username: string) {
+export async function findUserByUsernameService(username: string) {
     try {
         const user = await findUser(username);
 
