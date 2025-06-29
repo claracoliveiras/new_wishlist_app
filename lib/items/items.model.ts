@@ -4,17 +4,27 @@ export async function insertWishlistItemModel(itemname: string, itemurl: string,
     try {
         return await db`INSERT INTO items ( itemname, itemurl, imgurl, itemprice, itemcolor, itembrand, itemsize, itemcurrency, tied_user ) VALUES ( ${itemname}, ${itemurl}, ${imgurl}, ${itemprice}, ${itemcolor}, ${itembrand}, ${itemsize}, ${itemcurrency}, ${tied_user} )`;
     } catch (e) {
-        console.log("Error in the item model: ", e);
+        console.log("Error thrown in model: ", e);
         throw e;
     }
 }
 
 export async function selectWishlistItemsPerUserModel(tied_user: string) {
-    return await db`SELECT * FROM items WHERE tied_user = ${tied_user}`;
+    try {
+        return await db`SELECT * FROM items WHERE tied_user = ${tied_user}`;
+    } catch (e) {
+        console.log("Error thrown in model", e);
+        throw e;
+    }
 }
 
 export async function selectWishlistItemPerIdModel(uuid: string) {
-    const query = await db`SELECT * FROM items WHERE id = ${uuid}`.values();
-    console.log(query);
-    return query;
+    try {
+        const query = await db`SELECT * FROM items WHERE id = ${uuid}`.values();
+        console.log(query);
+        return query;
+    } catch (e) {
+        console.log("Error thrown in model", e);
+        throw e;
+    }
 }

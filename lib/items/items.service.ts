@@ -1,20 +1,35 @@
 import { insertWishlistItemModel, selectWishlistItemPerIdModel, selectWishlistItemsPerUserModel } from "./items.model";
 
 export async function insertWishlistItemService(itemname: string, itemurl: string, imgurl: string, itemprice: Number, itemcolor: string, itembrand: string, itemsize: string, itemcurrency: string, tied_user: string) {
-    return await insertWishlistItemModel(itemname, itemurl, imgurl, itemprice, itemcolor, itembrand, itemsize, itemcurrency, tied_user);
+    try {
+        return await insertWishlistItemModel(itemname, itemurl, imgurl, itemprice, itemcolor, itembrand, itemsize, itemcurrency, tied_user);
+    } catch (e) {
+        console.log("Error thrown in service", e);
+        throw e;
+    }
 }
 
 export async function selectWishlistItemsPerUserService(tied_user: string) {
-    const query = await selectWishlistItemsPerUserModel(tied_user);
-    const items: any[] = [];
+    try {
+        const query = await selectWishlistItemsPerUserModel(tied_user);
+        const items: any[] = [];
 
-    query.map((result: any) => items.push(result));
-    return items;
+        query.map((result: any) => items.push(result));
+        return items;
+    } catch (e) {
+        console.log("Error thrown in service", e);
+        throw e;
+    }
 }
 
 export async function selectWishlistItemPerIdService(uuid: string) {
-    const query = await selectWishlistItemPerIdModel(uuid);
+    try {
+        const query = await selectWishlistItemPerIdModel(uuid);
 
-    const item = query[0];
-    return item;
+        const item = query[0];
+        return item;
+    } catch (e) {
+        console.log("Error thrown in service", e);
+        throw e;
+    }
 }
