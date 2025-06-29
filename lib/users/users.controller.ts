@@ -1,5 +1,5 @@
 import jwt from "@elysiajs/jwt";
-import { findAllUsersService, findUserByUsername, handleLogin, handleRegister } from "./items.service";
+import { findAllUsersService, findUserByUsername, handleLogin, handleRegister } from "./users.service";
 
 // handles the request
 export async function registerNewUser(username:string, password:string) {

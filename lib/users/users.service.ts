@@ -1,4 +1,4 @@
-import { insertNewUser, findUser, findAllUsers } from "./items.model";
+import { insertNewUser, findUser, findAllUsers } from "./users.model";
 
 // modify the stuff from the model route (business logic)
 export async function handleRegister(username: string, password:string) {

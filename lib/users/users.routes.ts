@@ -1,5 +1,5 @@
 import Elysia, { t } from "elysia";
-import { findAllUsersController, loginUser, registerNewUser } from "./items.controller";
+import { findAllUsersController, loginUser, registerNewUser } from "./users.controller";
 import jwt from "@elysiajs/jwt";
 
 export default new Elysia(

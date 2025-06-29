@@ -2,7 +2,7 @@ import jwt from "@elysiajs/jwt";
 import swagger from "@elysiajs/swagger";
 import { SQL } from "bun";
 import Elysia, { t } from "elysia";
-import usersRoutes from './lib/users/items.routes';
+import usersRoutes from './lib/users/users.routes';
 import itemsRoutes from './lib/items/items.routes';
 import { db } from "./db";
 

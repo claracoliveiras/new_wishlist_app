@@ -12,7 +12,6 @@ export async function insertNewUser(username: string, hashedPassword: string) {
         }
 }
 
-
 export async function findUser(username: string) {
     try {
         const userDatabaseMatch = await db`SELECT * FROM users WHERE user_username = ${username}`.values();
@@ -21,7 +20,6 @@ export async function findUser(username: string) {
         console.log("Error in findUser:", e);
         throw new Error("Failed to find user");
     }
-
 }
 
 export async function findAllUsers() {
